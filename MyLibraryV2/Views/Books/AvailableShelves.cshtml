@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MyLibraryV2.Models.Shelf>
+
+@{
+    ViewData["Title"] = "AvailableShelves";
+}
+
+<h1>AvailableShelves</h1>
+
+@* <p>
+    <a  asp-action="Create">Create New</a>
+</p> *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShelfId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Width)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeftSpace)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Library)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShelfId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeftSpace)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Library.Id)
+            </td>
+            <td>
+                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> | *@
+                <a asp-controller="Books" asp-action="Create" asp-route-id="@item.Id">Add Book to this shelf</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MyLibraryV2.Models.Library>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Libraries</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Add Library</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LibraryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LibraryName)
+            </td>
+            <td>
+               @*  <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> | *@
+                    <a asp-controller="Shelves" asp-action="Index" class="btn btn-primary" asp-route-id="@item.Id">Shelves</a> 
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
