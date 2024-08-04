@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibraryV2.Data;
 
@@ -11,9 +12,11 @@ using MyLibraryV2.Data;
 namespace MyLibraryV2.Migrations
 {
     [DbContext(typeof(MyLibraryV2Context))]
-    partial class MyLibraryV2ContextModelSnapshot : ModelSnapshot
+    [Migration("20240802150633_initial6")]
+    partial class initial6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,10 +74,16 @@ namespace MyLibraryV2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Hight")
+                        .HasColumnType("int");
+
                     b.Property<string>("SetTitle")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ShelfId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Width")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

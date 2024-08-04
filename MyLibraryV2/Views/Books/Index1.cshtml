@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<MyLibraryV2.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index1";
 }
 
-<h1>Books</h1>
+<h1>Results</h1>
 
 
 <table class="table table-bordered">
@@ -21,6 +21,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShelfNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Shelf)
@@ -44,15 +47,17 @@
                 @Html.DisplayFor(modelItem => item.Genre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Shelf.ShelfId)
+                @Html.DisplayFor(modelItem => item.ShelfNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shelf.Id)
             </td>
             <td>
                 @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
-                    <a class="btn btn-outline-info"  asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Details" class="btn btn-outline-info" asp-route-id="@item.Id">Details</a>
                 @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
             </td>
         </tr>
 }
     </tbody>
 </table>
-<a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Back</a>

@@ -13,13 +13,14 @@ namespace MyLibraryV2.Models
         public int Hight { get; set; }
         [Display(Name = "רוחב ספר")]
         public int Width { get; set; }
-        
         public string? Genre { get; set; }
         [Display(Name = "מספר מדף")]
         public int? ShelfNumber { get; set; }
-        
         public int? ShelfId { get; set; } = null;
-
         public Shelf? Shelf { get; set; } = null;
+        public int? BookSetId { get; set; } = null;
+        public BookSet? BookSet { get; set; } = null;
+        [Display(Name = "מספר כרך")]
+        public int? VolumeNum { get; set;} = null;
     }
 }

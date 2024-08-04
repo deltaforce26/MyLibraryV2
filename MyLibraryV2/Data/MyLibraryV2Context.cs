@@ -17,6 +17,8 @@ namespace MyLibraryV2.Data
         public DbSet<MyLibraryV2.Models.Book> Book { get; set; } = default!;
         public DbSet<MyLibraryV2.Models.Library> Library { get; set; } = default!;
         public DbSet<MyLibraryV2.Models.Shelf> Shelf { get; set; } = default!;
+        public DbSet<MyLibraryV2.Models.BookSet> BookSet { get; set; } = default!;
+        
 
         
     }

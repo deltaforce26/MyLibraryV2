@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibraryV2.Data;
 
@@ -11,9 +12,11 @@ using MyLibraryV2.Data;
 namespace MyLibraryV2.Migrations
 {
     [DbContext(typeof(MyLibraryV2Context))]
-    partial class MyLibraryV2ContextModelSnapshot : ModelSnapshot
+    [Migration("20240802134322_initial5")]
+    partial class initial5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

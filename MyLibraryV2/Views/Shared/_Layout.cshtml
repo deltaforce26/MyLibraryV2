@@ -28,11 +28,18 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Libraries" asp-action="Index">Libraries</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Books" asp-action="Index">Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="BookSets" asp-action="Index">Sets</a>
+                        </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search a book" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form asp-controller="Books" asp-action="Index1" class="d-flex" role="search">
+                            <input type="search" name="SearchString" placeholder="Search a book" class="form-control me-2" aria-label="Search" />
+                            <input type="submit" value="Search" class="btn btn-outline-success" />
                     </form>
+                   
                 </div>
             </div>
         </nav>

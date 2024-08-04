@@ -1,0 +1,138 @@
+﻿@model MyLibraryV2.Models.BookSet
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add a new set</h1>
+
+<h4>BookSet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SetTitle" class="control-label"></label>
+                <input asp-for="SetTitle" class="form-control" />
+                <span asp-validation-for="SetTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="LibraryId" class="control-label">ז'אנר</label>
+                <select id="LibraryId" name="LibraryId" class="form-control" asp-items="ViewBag.Libraries">
+                    <option disabled selected>Select Genre</option>
+                </select>
+            </div>
+            <div id="booksContainer"></div>
+
+            <div class="form-group row mt-2">
+                <div class="col">
+                    <button type="button" id="addBookButton" class="btn btn-success">Add Book</button>
+                </div>
+                <div class="col ">
+                    <button type="button" id="selectShelfButton" class="btn btn-secondary" style="display:none;">Select Shelf</button>
+                </div>
+                
+            </div>
+            <div class="form-group mt-2">
+                <label for="shelfSelect" class="control-label">Select Shelf</label>
+                <select id="shelfSelect"  name="ShelfId" class="form-control " style="display:none;">
+                    <option disabled selected>Select Shelf</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary w-100 mt-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to list</a>
+</div>
+<input id="TotalWidth" type="hidden" name="TotalWidth" class="form-control" readonly />
+<input id="MaxHeight" type="hidden" name="MaxHeight" class="form-control" />
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('addBookButton').addEventListener('click', function () {
+            var container = document.getElementById('booksContainer');
+            var index = container.getElementsByClassName('bookFields').length;
+            var newFields = document.createElement('div');
+            newFields.className = 'bookFields';
+            newFields.innerHTML = `
+                        <div class="form-group">
+                            <label for="Books_${index}__Name" class="control-label">שם הספר</label>
+                                    <input name="Books[${index}].BookName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Books_${index}__Height" class="control-label">גובה</label>
+                                            <input type="number" name="Books[${index}].Hight" min="1" class="form-control book-height" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Books_${index}__Width" class="control-label">רוחב</label>
+                                                    <input type="number" name="Books[${index}].Width" min="1" class="form-control  book-width" />
+                        </div>
+                    `;
+            container.appendChild(newFields);
+            updateTotalWidth();
+            updateMaxHeight();
+            document.getElementById('selectShelfButton').style.display = 'inline-block';
+        });
+
+        document.getElementById('booksContainer').addEventListener('input', function (event) {
+            if (event.target.classList.contains('book-width')) {
+                updateTotalWidth();
+            }
+            if (event.target.classList.contains('book-height')) {
+                updateMaxHeight();
+            }
+        });
+
+        document.getElementById('selectShelfButton').addEventListener('click', function () {
+            var totalWidth = document.getElementById('TotalWidth').value;
+            var maxHeight = document.getElementById('MaxHeight').value;
+            var selectedLibraryId = document.getElementById('LibraryId').value;
+
+            fetch(`/BookSets/GetShelfs?libraryId=${selectedLibraryId}&height=${maxHeight}&totalWidth=${totalWidth}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Shelves details:", data);
+                    var shelvesSelect = document.getElementById("shelfSelect");
+                    const options = data.map(({ value, text }) => `<option value="${value}">${text}</option>`).join('');
+                    shelvesSelect.innerHTML = options;
+                    shelvesSelect.style.display = 'block'; // הצגת תיבת הבחירה
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        function updateTotalWidth() {
+            var totalWidth = 0;
+            var widths = document.querySelectorAll('.book-width');
+            widths.forEach(function (input) {
+                var value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    totalWidth += value;
+                }
+            });
+            document.getElementById('TotalWidth').value = totalWidth;
+            console.log("TotalWidth: " + totalWidth)
+        }
+
+        function updateMaxHeight() {
+            var maxHeight = 0;
+            var heights = document.querySelectorAll('.book-height');
+            heights.forEach(function (input) {
+                var value = parseFloat(input.value);
+                if (!isNaN(value) && value > maxHeight) {
+                    maxHeight = value;
+                }
+            });
+            document.getElementById('MaxHeight').value = maxHeight;
+            console.log("MaxHeight: " + maxHeight)
+        }
+    </script>
+}

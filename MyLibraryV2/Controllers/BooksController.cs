@@ -25,6 +25,24 @@ namespace MyLibraryV2.Controllers
             var myLibraryV2Context = _context.Book.Include(b => b.Shelf);
             return View(await myLibraryV2Context.ToListAsync());
         }
+
+        public async Task<IActionResult> Index1(string searchString)
+        {
+            if (_context.Book == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            var books = from b in _context.Book
+                         select b;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.BookName!.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            return View(await books.ToListAsync());
+        }
         
 
 
@@ -58,6 +76,8 @@ namespace MyLibraryV2.Controllers
             return View(book);
         }
 
+       
+        
         // GET: Books/Create/5
         public IActionResult Create(int? Id)
         {

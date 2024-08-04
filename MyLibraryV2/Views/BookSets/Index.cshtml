@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MyLibraryV2.Models.BookSet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Set list</h1>
+
+<p>
+    <a class="btn btn-outline-success" asp-action="Create">Add set</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SetTitle)
+            </th>
+            <th>Books list</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SetTitle)
+            </td>
+                <td>
+                    <ul >
+                        @foreach (var book in item.Books)
+                        {
+
+                            <li>@book.BookName</li>
+
+                        }
+                    </ul>
+                    
+                </td>
+            
+            <td>
+                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @*   <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index" >Back</a>

@@ -20,7 +20,7 @@ namespace MyLibraryV2.Models
 
         public Library? Library { get; set; }
 
-        public ICollection<Book>? Books { get; set; }
+        public ICollection<Book> Books { get; set; }
 
         //[NotMapped]
         //public Double EmptySpace { get => Books != null ? Width - Books.Sum(b => b.Width) : Width; }
